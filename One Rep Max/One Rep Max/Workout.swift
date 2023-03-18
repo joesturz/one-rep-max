@@ -13,29 +13,55 @@ struct Workout: Identifiable {
   var workoutInstances: [Date : [WorkoutInstance]] = [:]
   
   func getAverageWeight() -> Int {
-    var totalInstances = 0
+    let totalDays = workoutInstances.keys.count
     var totalWeight = 0
     for( _, instances) in workoutInstances {
-      totalInstances += instances.count
       let weights = instances.map { i in
-        i.weight
+        i.oneRepMax()
       }
-      totalWeight += weights.reduce(0, +)
+      totalWeight += weights.max() ?? 0
     }
-    if totalInstances == 0 {
-      return 0
-    }
-    let avg = totalWeight / totalInstances
+    let avg = totalWeight / totalDays
     return avg
+  }
+  
+  func getMaxReps() -> [MaxRepOnDate] {
+    var result = [MaxRepOnDate]()
+    let workoutInst = workoutInstances.sorted(by: { $0.0 < $1.0 })
+    for(date, instances) in workoutInst {
+      let weights = instances.map { i in
+        i.oneRepMax()
+      }
+      result.append(MaxRepOnDate(date: date, maxRep: weights.max() ?? 0))
+      print("date: \(date), max: \(weights.max() ?? 0)")
+    }
+    return result
   }
   
 }
 
-struct WorkoutInstance {
+struct WorkoutInstance: Identifiable {
+  var id = UUID()
   var date: Date
   var max: Int
   var reps: Int
   var weight: Int
+  
+  //calculates the 1 rep max using the Brzycki Formula
+  func oneRepMax() -> Int {
+    var r = 0.0
+    if reps < 37 {
+      r = 36.0/(37.0 - Double(reps))
+    }
+    let result = Double(weight) * r
+    return Int(result)
+  }
+}
+
+struct MaxRepOnDate: Identifiable {
+  var id = UUID()
+  var date: Date
+  var maxRep: Int
 }
 
 
@@ -58,7 +84,7 @@ func makeTestData() -> [Workout] {
   return [w1, w2]
 }
 
-let testData2 = ImportData.fromFile().map { _, workout in
+let testData2 = ImportData.fromFile().sorted(by: { $0.0 < $1.0 }).map { _, workout in
   workout
 }
 
