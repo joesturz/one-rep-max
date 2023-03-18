@@ -9,9 +9,16 @@ import Foundation
 
 class ImportData {
   
-  static func fromFile() -> [String: Workout] {
+  static func from(fileName: String  = "workoutData") -> [Workout] {
+    let result = ImportData.with(file:fileName).sorted(by: { $0.0 < $1.0 }).map { _, workout in
+      workout
+    }
+    return result
+  }
+  
+  static func with(file: String) -> [String: Workout] {
     var rawData = [String: Workout]()
-    guard let filepath = Bundle.main.path(forResource: "workoutData", ofType: "txt") else {
+    guard let filepath = Bundle.main.path(forResource: file, ofType: "txt") else {
       return [:]
     }
     var data = ""
@@ -28,10 +35,12 @@ class ImportData {
         continue
       }
       let name = columns[1]
-      let instance = WorkoutInstance(date: date, max: Int(columns[2]) ?? 1, reps: Int(columns[3]) ?? 1, weight: Int(columns[4]) ?? 0 )
+      let instance = WorkoutInstance(date: date, set: Int(columns[2]) ?? 1, reps: Int(columns[3]) ?? 1, weight: Int(columns[4]) ?? 0 )
       if var workout = rawData[name] {
         if var instances = workout.workoutInstances[date] {
           instances.append(instance)
+          let newInstances = instances
+          workout.workoutInstances[date] = newInstances
         } else {
           workout.workoutInstances[date] = [instance]
         }
@@ -41,7 +50,6 @@ class ImportData {
         workout.workoutInstances[date] = [instance]
         rawData[name] = workout
       }
-      
     }
     return rawData
   }

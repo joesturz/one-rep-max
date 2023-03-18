@@ -15,7 +15,7 @@ struct WorkoutDetail: View {
       HStack {
         Text(workout.name).font(.title2).multilineTextAlignment(.leading)
         Spacer()
-        Text("\(workout.getAverageWeight())").font(.title).multilineTextAlignment(.trailing)
+        Text("\(workout.getAverageOneRepMax())").font(.title).multilineTextAlignment(.trailing)
       }
       HStack(alignment: .center) {
         Text("One Rep Max")
@@ -28,10 +28,15 @@ struct WorkoutDetail: View {
           .font(.subheadline)
           .foregroundColor(.secondary)
       }
-      Chart(workout.getMaxReps()) { item in
+      Chart(workout.getOneRepMaxPerDay()) { item in
         LineMark(x: .value("Date", item.date),
                    y: .value("Weight", item.maxRep))
+        .symbol(by: .value("Workout", workout.name))
       }
+      .frame(minHeight: 100, maxHeight: 250)
+      .chartYScale(domain: workout.getMinMaxOfMax().min - 20 ... workout.getMinMaxOfMax().max + 20 )
+      .chartLegend(.hidden)
+      Spacer()
     }
     .padding(.horizontal)
   }
@@ -39,6 +44,6 @@ struct WorkoutDetail: View {
 
 struct WorkoutDetail_Previews: PreviewProvider {
   static var previews: some View {
-    WorkoutDetail(workout: testData2[0])
+    WorkoutDetail(workout: testData[1])
   }
 }

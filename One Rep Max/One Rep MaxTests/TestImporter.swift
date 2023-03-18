@@ -11,17 +11,18 @@ import XCTest
 final class TestImporter: XCTestCase {
   
   func testImportDataKeys() {
-    let data = ImportData.fromFile()
-    let keys = data.keys
-    let result = keys.count
+    let data = ImportData.from()
+    let result = data.count
     let expected = 3
     XCTAssertEqual(result, expected)
   }
   
   func testImportedWorkouts() {
-    let data = ImportData.fromFile()
-    let firstWorkout = data[data.keys.first!]!
-    XCTAssertEqual(28, firstWorkout.workoutInstances.count)
+    let data = ImportData.from()
+    guard let firstWorkout = data.first else {
+      XCTFail()
+      return
+    }
+    XCTAssertEqual(30, firstWorkout.workoutInstances.count)
   }
-
 }

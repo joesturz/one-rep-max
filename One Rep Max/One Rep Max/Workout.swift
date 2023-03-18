@@ -12,38 +12,51 @@ struct Workout: Identifiable {
   var name: String
   var workoutInstances: [Date : [WorkoutInstance]] = [:]
   
-  func getAverageWeight() -> Int {
-    let totalDays = workoutInstances.keys.count
-    var totalWeight = 0
-    for( _, instances) in workoutInstances {
-      let weights = instances.map { i in
-        i.oneRepMax()
+  func getAverageOneRepMax() -> Int {
+    var maxWeights: [Int] = []
+    for k in workoutInstances.keys {
+      if let instances = workoutInstances[k] {
+        let weights = instances.map { i in
+          i.oneRepMax()
+        }
+        if let max = weights.max() {
+          maxWeights.append(max)
+        }
       }
-      totalWeight += weights.max() ?? 0
     }
-    let avg = totalWeight / totalDays
-    return avg
+    let total = maxWeights.reduce(0, +)
+    let avg = Double(total) / Double(maxWeights.count)
+    return Int(avg)
   }
   
-  func getMaxReps() -> [MaxRepOnDate] {
-    var result = [MaxRepOnDate]()
+  func getOneRepMaxPerDay() -> [OneRepMaxForDate] {
+    var result = [OneRepMaxForDate]()
     let workoutInst = workoutInstances.sorted(by: { $0.0 < $1.0 })
     for(date, instances) in workoutInst {
       let weights = instances.map { i in
         i.oneRepMax()
       }
-      result.append(MaxRepOnDate(date: date, maxRep: weights.max() ?? 0))
-      print("date: \(date), max: \(weights.max() ?? 0)")
+      result.append(OneRepMaxForDate(date: date, maxRep: weights.max() ?? 0))
     }
+    result = result.sorted(by: { $0.date < $1.date })
     return result
   }
+  
+  func getMinMaxOfMax() -> (min: Int, max:Int) {
+    let arr = getOneRepMaxPerDay()
+    let result = arr.map { orm in
+      orm.maxRep
+    }
+    return (result.min() ?? 0, result.max() ?? 0)
+  }
+  
   
 }
 
 struct WorkoutInstance: Identifiable {
   var id = UUID()
   var date: Date
-  var max: Int
+  var set: Int
   var reps: Int
   var weight: Int
   
@@ -58,33 +71,11 @@ struct WorkoutInstance: Identifiable {
   }
 }
 
-struct MaxRepOnDate: Identifiable {
+struct OneRepMaxForDate: Identifiable {
   var id = UUID()
   var date: Date
   var maxRep: Int
 }
 
-
-
-
-let testData = makeTestData()
-
-func makeTestData() -> [Workout] {
-  let i1 =  WorkoutInstance(date: Date(), max: 1, reps: 2, weight: 20)
-  let i2 =  WorkoutInstance(date: Date(), max: 1, reps: 2, weight: 30)
-  let i3 =  WorkoutInstance(date: Date(), max: 1, reps: 2, weight: 100)
-  let i4 =  WorkoutInstance(date: Date(), max: 1, reps: 2, weight: 150)
-
-  var w1 = Workout(name: "Workout 1")
-  var w2 = Workout(name: "Workout 2")
-  w1.workoutInstances[i1.date] = [i1, i2]
-  w2.workoutInstances[i3.date] = [i3, i4]
-
-  
-  return [w1, w2]
-}
-
-let testData2 = ImportData.fromFile().sorted(by: { $0.0 < $1.0 }).map { _, workout in
-  workout
-}
+let testData = ImportData.from()
 

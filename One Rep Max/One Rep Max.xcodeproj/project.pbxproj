@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D83D3D2829C6110500498BAC /* workoutData.txt in Resources */ = {isa = PBXBuildFile; fileRef = D83D3D2729C6110500498BAC /* workoutData.txt */; };
 		D84E4AD829C506D200CB5B7C /* TestWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84E4AD729C506D200CB5B7C /* TestWorkout.swift */; };
 		D84E4ADA29C50EBC00CB5B7C /* TestImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84E4AD929C50EBC00CB5B7C /* TestImporter.swift */; };
 		D8864E7329C4CC2B00627219 /* One_Rep_MaxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8864E7229C4CC2B00627219 /* One_Rep_MaxApp.swift */; };
@@ -16,7 +17,6 @@
 		D8E5A4D829C4CE3F00867F5A /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E5A4D729C4CE3F00867F5A /* Workout.swift */; };
 		D8E5A4DA29C4EB9A00867F5A /* WorkoutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E5A4D929C4EB9A00867F5A /* WorkoutDetail.swift */; };
 		D8E5A4DC29C4EE1200867F5A /* ImportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E5A4DB29C4EE1200867F5A /* ImportData.swift */; };
-		D8E5A4DE29C4EE3C00867F5A /* workoutData.txt in Resources */ = {isa = PBXBuildFile; fileRef = D8E5A4DD29C4EE3C00867F5A /* workoutData.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D83D3D2729C6110500498BAC /* workoutData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = workoutData.txt; sourceTree = "<group>"; };
 		D84E4ACE29C506BA00CB5B7C /* One Rep MaxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "One Rep MaxTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D84E4AD729C506D200CB5B7C /* TestWorkout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWorkout.swift; sourceTree = "<group>"; };
 		D84E4AD929C50EBC00CB5B7C /* TestImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImporter.swift; sourceTree = "<group>"; };
@@ -42,7 +43,6 @@
 		D8E5A4D729C4CE3F00867F5A /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		D8E5A4D929C4EB9A00867F5A /* WorkoutDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetail.swift; sourceTree = "<group>"; };
 		D8E5A4DB29C4EE1200867F5A /* ImportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportData.swift; sourceTree = "<group>"; };
-		D8E5A4DD29C4EE3C00867F5A /* workoutData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = workoutData.txt; path = ../../../../../Desktop/workoutData.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +101,7 @@
 				D8864E7829C4CC2D00627219 /* One_Rep_Max.entitlements */,
 				D8864E7929C4CC2D00627219 /* Preview Content */,
 				D8E5A4DB29C4EE1200867F5A /* ImportData.swift */,
-				D8E5A4DD29C4EE3C00867F5A /* workoutData.txt */,
+				D83D3D2729C6110500498BAC /* workoutData.txt */,
 			);
 			path = "One Rep Max";
 			sourceTree = "<group>";
@@ -204,7 +204,7 @@
 			files = (
 				D8864E7B29C4CC2D00627219 /* Preview Assets.xcassets in Resources */,
 				D8864E7729C4CC2D00627219 /* Assets.xcassets in Resources */,
-				D8E5A4DE29C4EE3C00867F5A /* workoutData.txt in Resources */,
+				D83D3D2829C6110500498BAC /* workoutData.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

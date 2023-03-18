@@ -8,34 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
-  var workouts:[Workout] = []
+  var workouts:[Workout] = ImportData.from(fileName: "NEW_FILE_NAME")
+  @Environment(\.colorScheme) var colorScheme
   
   var body: some View {
     NavigationStack {
+      Spacer(minLength: 50)
       List {
         ForEach(workouts) { workout in
           WorkoutCell(workout: workout)
         }
       }.listStyle(.plain)
-    }
+    }.accentColor(colorScheme == .dark ? Color.white : Color.black)
   }
 }
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView(workouts: testData2)
+    ContentView(workouts: testData)
   }
 }
 
 struct WorkoutCell: View {
   var workout: Workout
   var body: some View {
-    NavigationLink(destination: Text(workout.name)) {
+    NavigationLink(destination: WorkoutDetail(workout: workout)) {
       VStack(alignment: .leading) {
         HStack {
           Text(workout.name).font(.title2).multilineTextAlignment(.leading)
           Spacer()
-          Text("\(workout.getAverageWeight())").font(.title).multilineTextAlignment(.trailing)
+          Text("\(workout.getAverageOneRepMax())").font(.title).multilineTextAlignment(.trailing)
         }
         HStack(alignment: .center) {
           Text("One Rep Max")
@@ -49,6 +51,6 @@ struct WorkoutCell: View {
             .foregroundColor(.secondary)
         }
       }
-    }
+    }.navigationTitle("")
   }
 }
